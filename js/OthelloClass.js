@@ -13,6 +13,8 @@ class OthelloClass {
     console.log("initializeBoard");
     for (let i = 0; i < this.rows * this.cols; i++) {
       const cell = document.createElement("div");
+      // セルのインデックスをセット
+      cell.dataset.index = i;
       cell.classList.add("cell");
       board.appendChild(cell);
     }
