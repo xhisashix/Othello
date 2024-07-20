@@ -27,6 +27,37 @@ class OthelloClass {
   }
 
   /**
+   * 盤面の状態を取得する関数
+   * @returns {Array<string>} - 盤面の状態
+   */
+  getBoardState() {
+    console.log("getBoardState");
+    const boardState = [];
+    for (let i = 0; i < this.rows * this.cols; i++) {
+      const cell = this.board.children[i];
+      const stone = cell.querySelector(".stone");
+      if (stone) {
+        boardState[i] = stone.classList.contains("black") ? "black" : "white";
+      } else {
+        boardState[i] = "empty";
+      }
+    }
+    return boardState;
+  }
+
+  /**
+   * ターンを管理する関数
+   * @returns {string} - 現在のターン
+   */
+  getTurn() {
+    console.log("getTurn");
+    const boardState = this.getBoardState();
+    const blackCount = boardState.filter((stone) => stone === "black").length;
+    const whiteCount = boardState.filter((stone) => stone === "white").length;
+    return blackCount === whiteCount ? "black" : "white";
+  }
+
+  /**
    * 石を置く関数
    * @param {number} index - クリックされたセルのインデックス
    * @param {string} color - 置く石の色
