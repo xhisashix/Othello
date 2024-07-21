@@ -27,6 +27,12 @@ class OthelloClass {
     this.putStone(28, WHITE_STONE);
     this.putStone(35, WHITE_STONE);
     this.putStone(36, BLACK_STONE);
+
+    const turn = this.getTurn();
+    const putTableIndexes = this.getPutTableIndexes(turn);
+    this.markPutTableIndexes(putTableIndexes);
+
+    document.getElementById("turn").textContent = `${turn}のターン`;
   }
 
   /**
