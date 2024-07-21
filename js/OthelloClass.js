@@ -10,7 +10,6 @@ class OthelloClass {
    * @returns {void}
    */
   initializeBoard() {
-    console.log("initializeBoard");
     for (let i = 0; i < this.rows * this.cols; i++) {
       const cell = document.createElement("div");
       // セルのインデックスをセット
@@ -31,7 +30,6 @@ class OthelloClass {
    * @returns {Array<string>} - 盤面の状態
    */
   getBoardState() {
-    console.log("getBoardState");
     const boardState = [];
     for (let i = 0; i < this.rows * this.cols; i++) {
       const cell = this.board.children[i];
@@ -50,7 +48,6 @@ class OthelloClass {
    * @returns {string} - 現在のターン
    */
   getTurn() {
-    console.log("getTurn");
     const boardState = this.getBoardState();
     const blackCount = boardState.filter((stone) => stone === "black").length;
     const whiteCount = boardState.filter((stone) => stone === "white").length;
@@ -64,7 +61,6 @@ class OthelloClass {
    * @returns {void}
    */
   putStone(index, color) {
-    console.log("putStone");
     const cell = this.board.children[index];
     const stone = document.createElement("div");
     stone.classList.add("stone", color);
@@ -77,7 +73,6 @@ class OthelloClass {
    * @returns {void}
    */
   removeStone(index) {
-    console.log("removeStone");
     const cell = this.board.children[index];
     const stone = cell.querySelector(".stone");
     if (stone) {
@@ -92,7 +87,6 @@ class OthelloClass {
    * @returns {void}
    */
   reverseStone(index, color) {
-    console.log("reverseStone");
     const boardState = this.getBoardState();
     const reverseIndexes = this.getReverseIndexes(index, color);
     reverseIndexes.forEach((reverseIndex) => {
@@ -102,7 +96,6 @@ class OthelloClass {
 
     this.putStone(index, color);
 
-    console.log(boardState);
   }
 
   /**
@@ -112,7 +105,6 @@ class OthelloClass {
    * @returns {Array<number>} - 裏返す石のインデックス
    */
   getReverseIndexes(index, color) {
-    console.log("getReverseIndexes");
     const reverseIndexes = [];
     const directions = [
       [-1, -1],
@@ -145,7 +137,6 @@ class OthelloClass {
    * @returns {Array<number>} - 裏返す石のインデックス
    */
   getReverseIndexesInDirection(index, direction, color) {
-    console.log("getReverseIndexesInDirection");
     const reverseIndexes = [];
     let [dx, dy] = direction;
     let x = index % this.cols;
@@ -178,14 +169,12 @@ class OthelloClass {
    * @returns {Array<number>} - 石をおける場所
    */
   getPutTableIndexes(color) {
-    console.log("getPutTableIndexes");
     const putTableIndexes = [];
     for (let i = 0; i < this.rows * this.cols; i++) {
       if (this.getReverseIndexes(i, color).length > 0) {
         putTableIndexes.push(i);
       }
     }
-    console.log(putTableIndexes);
     return putTableIndexes;
   }
 
@@ -195,8 +184,6 @@ class OthelloClass {
    * @returns {void}
    */
   markPutTableIndexes(putTableIndexes) {
-    console.log("markPutTableIndexes");
-
     this.board.querySelectorAll(".put-table").forEach((cell) => {
       cell.classList.remove("put-table");
     });
