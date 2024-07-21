@@ -20,6 +20,7 @@ document.addEventListener("click", (event) => {
 
   turn = othelloClass.getTurn();
 
+  document.getElementById("turn").textContent = `${turn} のターン`;
   const putTableIndexes = othelloClass.getPutTableIndexes(turn);
   othelloClass.markPutTableIndexes(putTableIndexes);
 });

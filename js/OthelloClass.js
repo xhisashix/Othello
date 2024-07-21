@@ -77,6 +77,12 @@ class OthelloClass {
    * @returns {void}
    */
   putStone(index, color) {
+    // すでに石が置かれている場合は何もしない
+    const boardState = this.getBoardState();
+    if (boardState[index] !== EMPTY) {
+      return;
+    }
+
     const cell = this.board.children[index];
     const stone = document.createElement("div");
     stone.classList.add("stone", color);
@@ -103,8 +109,12 @@ class OthelloClass {
    * @returns {void}
    */
   reverseStone(index, color) {
-    const boardState = this.getBoardState();
     const reverseIndexes = this.getReverseIndexes(index, color);
+    if (reverseIndexes.length === 0) {
+      alert("そこには置けません");
+      return;
+    }
+
     reverseIndexes.forEach((reverseIndex) => {
       this.removeStone(reverseIndex);
       this.putStone(reverseIndex, color);
