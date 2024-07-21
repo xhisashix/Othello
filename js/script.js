@@ -5,9 +5,6 @@ const othelloClass = new OthelloClass();
 
 document.addEventListener('DOMContentLoaded', () => {
   othelloClass.initializeBoard();
-  const boardState = othelloClass.getBoardState();
-
-  console.log(boardState);
 });
 
 document.addEventListener('click', (event) => {
@@ -16,13 +13,19 @@ document.addEventListener('click', (event) => {
     return;
   }
 
-  const turn = othelloClass.getTurn();
+  let turn = othelloClass.getTurn();
 
   const index = parseInt(cell.dataset.index, 10);
   console.log(index);
   othelloClass.reverseStone(index, turn);
   const boardState = othelloClass.getBoardState();
   console.log(boardState);
+
+  turn = othelloClass.getTurn();
+
+  const putTableIndexes = othelloClass.getPutTableIndexes(turn);
+  othelloClass.markPutTableIndexes(putTableIndexes);
+
 })
 
 

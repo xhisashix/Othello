@@ -30,3 +30,19 @@
 .white {
   background-color: white;
 }
+
+.put-table {
+  position: relative;
+}
+
+.put-table::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: "";
+  width: 5px;
+  height: 5px;
+  background-color: #ddd;
+  border-radius: 50%;
+}

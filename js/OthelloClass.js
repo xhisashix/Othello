@@ -171,6 +171,41 @@ class OthelloClass {
       reverseIndexes.push(targetIndex);
     }
   }
+
+  /**
+   * 石をおける場所を取得する関数
+   * @param {string} color - 置く石の色
+   * @returns {Array<number>} - 石をおける場所
+   */
+  getPutTableIndexes(color) {
+    console.log("getPutTableIndexes");
+    const putTableIndexes = [];
+    for (let i = 0; i < this.rows * this.cols; i++) {
+      if (this.getReverseIndexes(i, color).length > 0) {
+        putTableIndexes.push(i);
+      }
+    }
+    console.log(putTableIndexes);
+    return putTableIndexes;
+  }
+
+  /**
+   * 石をおける場所へのマークを表示する関数
+   * @param {array <number>} putTableIndexes - 石をおける場所
+   * @returns {void}
+   */
+  markPutTableIndexes(putTableIndexes) {
+    console.log("markPutTableIndexes");
+
+    this.board.querySelectorAll(".put-table").forEach((cell) => {
+      cell.classList.remove("put-table");
+    });
+
+    putTableIndexes.forEach((index) => {
+      const cell = this.board.children[index];
+      cell.classList.add("put-table");
+    });
+  }
 }
 
 export default OthelloClass;
