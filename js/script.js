@@ -20,7 +20,7 @@ document.addEventListener('click', (event) => {
 
   const index = parseInt(cell.dataset.index, 10);
   console.log(index);
-  othelloClass.putStone(index, turn);
+  othelloClass.reverseStone(index, turn);
   const boardState = othelloClass.getBoardState();
   console.log(boardState);
 })

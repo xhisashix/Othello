@@ -70,6 +70,107 @@ class OthelloClass {
     stone.classList.add("stone", color);
     cell.appendChild(stone);
   }
+
+  /**
+   * 既存の石を削除する関数
+   * @param {number} index - クリックされたセルのインデックス
+   * @returns {void}
+   */
+  removeStone(index) {
+    console.log("removeStone");
+    const cell = this.board.children[index];
+    const stone = cell.querySelector(".stone");
+    if (stone) {
+      cell.removeChild(stone);
+    }
+  }
+
+  /**
+   * 石を裏返す関数
+   * @param {number} index - クリックされたセルのインデックス
+   * @param {string} color - 置く石の色
+   * @returns {void}
+   */
+  reverseStone(index, color) {
+    console.log("reverseStone");
+    const boardState = this.getBoardState();
+    const reverseIndexes = this.getReverseIndexes(index, color);
+    reverseIndexes.forEach((reverseIndex) => {
+      this.removeStone(reverseIndex);
+      this.putStone(reverseIndex, color);
+    });
+
+    this.putStone(index, color);
+
+    console.log(boardState);
+  }
+
+  /**
+   * 裏返す石のインデックスを取得する関数
+   * @param {number} index - クリックされたセルのインデックス
+   * @param {string} color - 置く石の色
+   * @returns {Array<number>} - 裏返す石のインデックス
+   */
+  getReverseIndexes(index, color) {
+    console.log("getReverseIndexes");
+    const reverseIndexes = [];
+    const directions = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, -1],
+      [0, 1],
+      [1, -1],
+      [1, 0],
+      [1, 1],
+    ];
+
+    directions.forEach((direction) => {
+      const reverseIndexesInDirection = this.getReverseIndexesInDirection(
+        index,
+        direction,
+        color
+      );
+      reverseIndexes.push(...reverseIndexesInDirection);
+    });
+
+    return reverseIndexes;
+  }
+
+  /**
+   * 特定の方向に裏返す石のインデックスを取得する関数
+   * @param {number} index - クリックされたセルのインデックス
+   * @param {Array<number>} direction - 方向
+   * @param {string} color - 置く石の色
+   * @returns {Array<number>} - 裏返す石のインデックス
+   */
+  getReverseIndexesInDirection(index, direction, color) {
+    console.log("getReverseIndexesInDirection");
+    const reverseIndexes = [];
+    let [dx, dy] = direction;
+    let x = index % this.cols;
+    let y = Math.floor(index / this.cols);
+
+    while (true) {
+      x += dx;
+      y += dy;
+      if (x < 0 || x >= this.cols || y < 0 || y >= this.rows) {
+        return [];
+      }
+
+      const targetIndex = y * this.cols + x;
+      const targetColor = this.getBoardState()[targetIndex];
+      if (targetColor === "empty") {
+        return [];
+      }
+
+      if (targetColor === color) {
+        return reverseIndexes;
+      }
+
+      reverseIndexes.push(targetIndex);
+    }
+  }
 }
 
 export default OthelloClass;
