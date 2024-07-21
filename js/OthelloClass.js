@@ -1,3 +1,7 @@
+const BLACK_STONE = "black";
+const WHITE_STONE = "white";
+const EMPTY = "empty";
+
 class OthelloClass {
   constructor() {
     this.rows = 8;
@@ -19,10 +23,10 @@ class OthelloClass {
     }
 
     // 初期配置
-    this.putStone(27, "black");
-    this.putStone(28, "white");
-    this.putStone(35, "white");
-    this.putStone(36, "black");
+    this.putStone(27, BLACK_STONE);
+    this.putStone(28, WHITE_STONE);
+    this.putStone(35, WHITE_STONE);
+    this.putStone(36, BLACK_STONE);
   }
 
   /**
@@ -35,9 +39,11 @@ class OthelloClass {
       const cell = this.board.children[i];
       const stone = cell.querySelector(".stone");
       if (stone) {
-        boardState[i] = stone.classList.contains("black") ? "black" : "white";
+        boardState[i] = stone.classList.contains(BLACK_STONE)
+          ? BLACK_STONE
+          : WHITE_STONE;
       } else {
-        boardState[i] = "empty";
+        boardState[i] = EMPTY;
       }
     }
     return boardState;
@@ -49,9 +55,13 @@ class OthelloClass {
    */
   getTurn() {
     const boardState = this.getBoardState();
-    const blackCount = boardState.filter((stone) => stone === "black").length;
-    const whiteCount = boardState.filter((stone) => stone === "white").length;
-    return blackCount === whiteCount ? "black" : "white";
+    const blackCount = boardState.filter(
+      (stone) => stone === BLACK_STONE
+    ).length;
+    const whiteCount = boardState.filter(
+      (stone) => stone === WHITE_STONE
+    ).length;
+    return blackCount === whiteCount ? BLACK_STONE : WHITE_STONE;
   }
 
   /**
@@ -95,7 +105,6 @@ class OthelloClass {
     });
 
     this.putStone(index, color);
-
   }
 
   /**
@@ -151,7 +160,7 @@ class OthelloClass {
 
       const targetIndex = y * this.cols + x;
       const targetColor = this.getBoardState()[targetIndex];
-      if (targetColor === "empty") {
+      if (targetColor === EMPTY) {
         return [];
       }
 
@@ -175,7 +184,10 @@ class OthelloClass {
         putTableIndexes.push(i);
       }
     }
-    return putTableIndexes;
+
+    // すでに石が置かれているセルは除外
+    const boardState = this.getBoardState();
+    return putTableIndexes.filter((index) => boardState[index] === EMPTY);
   }
 
   /**
