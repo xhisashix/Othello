@@ -27,4 +27,7 @@ document.addEventListener("click", (event) => {
   document.getElementById("turn").textContent = `${turn} のターン`;
   const putTableIndexes = othelloClass.getPutTableIndexes(turn);
   othelloClass.markPutTableIndexes(putTableIndexes);
+
+  // ゲーム終了判定
+  othelloClass.judge();
 });

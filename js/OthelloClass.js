@@ -244,6 +244,47 @@ class OthelloClass {
       cell.classList.add("put-table");
     });
   }
+
+  /**
+   * 勝敗を判定する関数
+   * @returns {void}
+   */
+  judge() {
+
+    // 石を置ける場所がある場合はゲーム続行
+    const blackPutTableIndexes = this.getPutTableIndexes(BLACK_STONE);
+    const whitePutTableIndexes = this.getPutTableIndexes(WHITE_STONE);
+
+    if (blackPutTableIndexes.length > 0 || whitePutTableIndexes.length > 0) {
+      return
+    }
+
+    const boardState = this.getBoardState();
+    const blackCount = boardState.filter(
+      (stone) => stone === BLACK_STONE
+    ).length;
+    const whiteCount = boardState.filter(
+      (stone) => stone === WHITE_STONE
+    ).length;
+
+    if (blackCount > whiteCount) {
+      alert("黒の勝ち");
+    } else if (blackCount < whiteCount) {
+      alert("白の勝ち");
+    } else {
+      alert("引き分け");
+    }
+
+    document.getElementById("turn").textContent = "ゲーム終了";
+
+    this.board.querySelectorAll(".put-table").forEach((cell) => {
+      cell.classList.remove("put-table");
+    });
+
+    this.board.removeEventListener("click", this.clickHandler);
+
+    return;
+  }
 }
 
 export default OthelloClass;
