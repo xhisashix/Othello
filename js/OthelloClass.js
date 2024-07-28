@@ -79,7 +79,7 @@ class OthelloClass {
   changeTurn() {
     console.log("changeTurn");
     console.log(this.getNextTurn());
-    const putTableIndexes = this.getPutTableIndexes(this.getNextTurn());
+    let putTableIndexes = this.getPutTableIndexes(this.getNextTurn());
     console.log(putTableIndexes);
 
     // 石を置ける場所がない場合はターンをスキップ
@@ -127,13 +127,13 @@ class OthelloClass {
    * 石を裏返す関数
    * @param {number} index - クリックされたセルのインデックス
    * @param {string} color - 置く石の色
-   * @returns {void}
+   * @returns {boolean} - 石を裏返すことができたかどうか
    */
   reverseStone(index, color) {
     const reverseIndexes = this.getReverseIndexes(index, color);
     if (reverseIndexes.length === 0) {
       alert("そこには置けません");
-      return;
+      return false;
     }
 
     reverseIndexes.forEach((reverseIndex) => {
@@ -142,6 +142,8 @@ class OthelloClass {
     });
 
     this.putStone(index, color);
+
+    return true;
   }
 
   /**

@@ -16,8 +16,10 @@ document.addEventListener("click", (event) => {
   let turn = othelloClass.getTurn();
 
   const index = parseInt(cell.dataset.index, 10);
-  othelloClass.reverseStone(index, turn);
 
+  if (!othelloClass.reverseStone(index, turn)) {
+    return;
+  }
   othelloClass.changeTurn();
 
   turn = othelloClass.getTurn();
