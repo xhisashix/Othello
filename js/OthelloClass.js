@@ -7,6 +7,7 @@ class OthelloClass {
     this.rows = 8;
     this.cols = 8;
     this.board = document.getElementById("board");
+    this.turn = BLACK_STONE;
   }
 
   /**
@@ -56,18 +57,38 @@ class OthelloClass {
   }
 
   /**
-   * ターンを管理する関数
+   * ターンを取得する関数
    * @returns {string} - 現在のターン
    */
   getTurn() {
-    const boardState = this.getBoardState();
-    const blackCount = boardState.filter(
-      (stone) => stone === BLACK_STONE
-    ).length;
-    const whiteCount = boardState.filter(
-      (stone) => stone === WHITE_STONE
-    ).length;
-    return blackCount === whiteCount ? BLACK_STONE : WHITE_STONE;
+    return this.turn;
+  }
+
+  /**
+   * 次のターンを取得する関数
+   * @returns {string} - 次のターン
+   */
+  getNextTurn() {
+    return this.turn === BLACK_STONE ? WHITE_STONE : BLACK_STONE;
+  }
+
+  /**
+   * ターンを変更する関数
+   * @returns {void}
+   */
+  changeTurn() {
+    console.log("changeTurn");
+    console.log(this.getNextTurn());
+    const putTableIndexes = this.getPutTableIndexes(this.getNextTurn());
+    console.log(putTableIndexes);
+
+    // 石を置ける場所がない場合はターンをスキップ
+    if (putTableIndexes.length === 0) {
+      this.turn = this.getNextTurn();
+      putTableIndexes = this.getPutTableIndexes(this.getNextTurn());
+    }
+
+    this.turn = this.getNextTurn();
   }
 
   /**

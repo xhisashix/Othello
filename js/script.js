@@ -18,6 +18,8 @@ document.addEventListener("click", (event) => {
   const index = parseInt(cell.dataset.index, 10);
   othelloClass.reverseStone(index, turn);
 
+  othelloClass.changeTurn();
+
   turn = othelloClass.getTurn();
 
   document.getElementById("turn").textContent = `${turn} のターン`;
